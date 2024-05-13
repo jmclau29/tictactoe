@@ -3,11 +3,12 @@ function gameBoard() {
     const rows = 3;
     const columns = 3;
 
-
-    for (let i = 0; i < rows; i++) {
-        board[i] = [];
-        for (let j = 0; j < columns; j++) {
-            board[i].push(cell());
+    const makeBoard = () => {
+        for (let i = 0; i < rows; i++) {
+            board[i] = [];
+            for (let j = 0; j < columns; j++) {
+                board[i].push(cell());
+            }
         }
     }
 
@@ -32,7 +33,11 @@ function gameBoard() {
         return boardWithCellValues;
     }
 
-    return { getBoard, writeToken, printBoard, getBoardWithCellValues };
+    const resetBoard = () => {
+        board = [];
+    }
+
+    return { makeBoard, getBoard, writeToken, printBoard, getBoardWithCellValues, resetBoard };
 }
 
 function cell() {
@@ -86,6 +91,7 @@ function gameController(
             const c = arr[i][2];
 
             if (a != '' && a === b && b === c) {
+                board.resetBoard;
                 return `Congrats! ${getActivePlayer().name} wins!`;
             }
         }
@@ -96,6 +102,7 @@ function gameController(
             const c = arr[2][i];
 
             if (a != '' && a === b && b === c) {
+                board.resetBoard;
                 return `Congrats! ${getActivePlayer().name} wins!`;
             }
         }
@@ -106,6 +113,7 @@ function gameController(
         const c = arr[2][2];
 
         if (a != '' && a === b && b === c) {
+            board.resetBoard;
             return `Congrats! ${getActivePlayer().name} wins!`;
         }
 
@@ -115,6 +123,7 @@ function gameController(
         const f = arr[2][0];
 
         if (d != '' && d === e && e === f) {
+            board.resetBoard;
             return `Congrats! ${getActivePlayer().name} wins!`;
         }
 
@@ -144,6 +153,7 @@ function gameController(
         printNewRound();
     }
 
+    board.makeBoard();
     printNewRound();
 
     return {
