@@ -18,7 +18,7 @@ function gameBoard() {
     const writeToken = (row, column, player) => {
         const selectedCell = board[row][column];
 
-        if (selectedCell.getValue() != 0) return;
+        if (selectedCell.getValue() != '') return;
 
         board[row][column].addToken(player);
     }
@@ -34,7 +34,9 @@ function gameBoard() {
     }
 
     const resetBoard = () => {
-        board = [];
+        console.log('board resetting...');
+        board.length = 0;
+        makeBoard();
     }
 
     return { makeBoard, getBoard, writeToken, printBoard, getBoardWithCellValues, resetBoard };
@@ -91,7 +93,7 @@ function gameController(
             const c = arr[i][2];
 
             if (a != '' && a === b && b === c) {
-                board.resetBoard;
+                board.resetBoard();
                 return `Congrats! ${getActivePlayer().name} wins!`;
             }
         }
@@ -102,7 +104,7 @@ function gameController(
             const c = arr[2][i];
 
             if (a != '' && a === b && b === c) {
-                board.resetBoard;
+                board.resetBoard();
                 return `Congrats! ${getActivePlayer().name} wins!`;
             }
         }
@@ -113,7 +115,7 @@ function gameController(
         const c = arr[2][2];
 
         if (a != '' && a === b && b === c) {
-            board.resetBoard;
+            board.resetBoard();
             return `Congrats! ${getActivePlayer().name} wins!`;
         }
 
@@ -123,7 +125,7 @@ function gameController(
         const f = arr[2][0];
 
         if (d != '' && d === e && e === f) {
-            board.resetBoard;
+            board.resetBoard();
             return `Congrats! ${getActivePlayer().name} wins!`;
         }
 
