@@ -141,13 +141,21 @@ function gameController(
     }
 
     const playRound = (column, row) => {
+        const boardWithCellValues = board.getBoardWithCellValues();
+
         console.log(
             `Writing ${getActivePlayer().name}'s to the board in space ${column}, ${row}...`
         );
-        board.writeToken(row, column, getActivePlayer().token);
+
+        if (boardWithCellValues[column][row] === '') {
+            board.writeToken(row, column, getActivePlayer().token);
+        } else {
+            console.log('sorry, that spot is taken! Try again!');
+            printNewRound();
+            return;
+        }
 
         //check for winner here
-        const boardWithCellValues = board.getBoardWithCellValues();
         console.log(winCheck(boardWithCellValues));
 
 
