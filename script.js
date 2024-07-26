@@ -93,8 +93,8 @@ function gameController(
             const c = arr[i][2];
 
             if (a != '' && a === b && b === c) {
+                console.log(`Congrats! ${getActivePlayer().name} wins!`);
                 board.resetBoard();
-                return `Congrats! ${getActivePlayer().name} wins!`;
             }
         }
         //check columns
@@ -104,8 +104,8 @@ function gameController(
             const c = arr[2][i];
 
             if (a != '' && a === b && b === c) {
+                console.log(`Congrats! ${getActivePlayer().name} wins!`);
                 board.resetBoard();
-                return `Congrats! ${getActivePlayer().name} wins!`;
             }
         }
 
@@ -115,8 +115,8 @@ function gameController(
         const c = arr[2][2];
 
         if (a != '' && a === b && b === c) {
+            console.log(`Congrats! ${getActivePlayer().name} wins!`);
             board.resetBoard();
-            return `Congrats! ${getActivePlayer().name} wins!`;
         }
 
         //right top -> left bottom diagonal check
@@ -125,8 +125,8 @@ function gameController(
         const f = arr[2][0];
 
         if (d != '' && d === e && e === f) {
+            console.log(`Congrats! ${getActivePlayer().name} wins!`);
             board.resetBoard();
-            return `Congrats! ${getActivePlayer().name} wins!`;
         }
 
         //check for draw
@@ -140,23 +140,26 @@ function gameController(
         return 'draw';
     }
 
-    const playRound = (column, row) => {
+    const playRound = (row, column) => {
         const boardWithCellValues = board.getBoardWithCellValues();
+        
+        const selectedCell = boardWithCellValues[row][column];
+        
 
         console.log(
-            `Writing ${getActivePlayer().name}'s to the board in space ${column}, ${row}...`
+            `Writing ${getActivePlayer().name}'s token to the board in space ${row}, ${column}...`
         );
 
-        if (boardWithCellValues[column][row] === '') {
-            board.writeToken(row, column, getActivePlayer().token);
-        } else {
+        if (selectedCell != '') {
             console.log('sorry, that spot is taken! Try again!');
             printNewRound();
             return;
+        } else {
+            board.writeToken(row, column, getActivePlayer().token);
+            boardWithCellValues[row][column] = getActivePlayer().token;
+            console.log(boardWithCellValues);
+            winCheck(boardWithCellValues);
         }
-
-        //check for winner here
-        console.log(winCheck(boardWithCellValues));
 
 
         switchPlayerTurn();
