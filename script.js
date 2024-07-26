@@ -175,3 +175,9 @@ function gameController(
 }
 
 const game = gameController();
+
+/* To-do:
+    add an object that will manage the display and changing the DOM to reflect the board state.
+    Add functions that allow the player to interact with the board by clicking on the webpage.
+    Make it look nice, and allow the players to change their name, restart the game, and results display.
+*/
