@@ -157,7 +157,6 @@ function gameController(
         } else {
             board.writeToken(row, column, getActivePlayer().token);
             boardWithCellValues[row][column] = getActivePlayer().token;
-            console.log(boardWithCellValues);
             winCheck(boardWithCellValues);
         }
 
