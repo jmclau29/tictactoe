@@ -176,8 +176,8 @@ function gameController(
 }
 
 /* To-do:
-    add an object that will manage the display and changing the DOM to reflect the board state.
-    Add functions that allow the player to interact with the board by clicking on the webpage.
+    add an object that will manage the display and changing the DOM to reflect the board state. --- OK
+    Add functions that allow the player to interact with the board by clicking on the webpage. --- OK
     Make it look nice, and allow the players to change their name, restart the game, and results display.
 */
 
@@ -195,13 +195,13 @@ function screenController() {
 
         playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
 
-        board.forEach(row => {
+        board.forEach((row, index) => {
+            rowIndex = index;
             row.forEach((cell, index) => {
                 const cellButton = document.createElement("button");
                 cellButton.classList.add("cell");
-
                 cellButton.dataset.column = index;
-                cellButton.dataset.row = row;
+                cellButton.dataset.row = rowIndex;
                 cellButton.textContent = cell.getValue();
                 boardDiv.appendChild(cellButton);
             })
