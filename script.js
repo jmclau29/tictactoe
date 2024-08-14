@@ -80,6 +80,11 @@ function gameController(
     };
     const getActivePlayer = () => activePlayer;
 
+    //change player names
+    const updateName = (name, id) => {
+        players[id].name = name;
+    }
+
     const printNewRound = () => {
         board.printBoard();
         console.log(`${getActivePlayer().name}'s turn.`);
@@ -133,11 +138,12 @@ function gameController(
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
                 const square = arr[i][j];
-                if (square === '') return undefined;
+                if (!square) return undefined;
             }
         }
 
-        return 'draw';
+        console.log('draw!');
+        board.resetBoard();
     }
 
     const playRound = (row, column) => {
@@ -171,6 +177,7 @@ function gameController(
     return {
         playRound,
         getActivePlayer,
+        updateName,
         getBoard: board.getBoard
     };
 }
@@ -185,6 +192,7 @@ function gameController(
 function screenController() {
     const game = gameController();
     const playerTurnDiv = document.querySelector('.turn');
+    const messageDiv = document.querySelector('.message');
     const boardDiv = document.querySelector('.board');
 
     const updateScreen = () => {
@@ -194,6 +202,7 @@ function screenController() {
         const activePlayer = game.getActivePlayer();
 
         playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+        messageDiv.textContent = game.message;
 
         board.forEach((row, index) => {
             rowIndex = index;
