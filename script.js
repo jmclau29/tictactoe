@@ -80,11 +80,6 @@ function gameController(
     };
     const getActivePlayer = () => activePlayer;
 
-    //change player names
-    const updateName = (name, id) => {
-        players[id].name = name;
-    }
-
     const printNewRound = () => {
         board.printBoard();
         console.log(`${getActivePlayer().name}'s turn.`);
@@ -151,11 +146,6 @@ function gameController(
 
         const selectedCell = boardWithCellValues[row][column];
 
-
-        console.log(
-            `Writing ${getActivePlayer().name}'s token to the board in space ${row}, ${column}...`
-        );
-
         if (selectedCell != '') {
             console.log('sorry, that spot is taken! Try again!');
             printNewRound();
@@ -177,7 +167,7 @@ function gameController(
     return {
         playRound,
         getActivePlayer,
-        updateName,
+        //updateName,
         getBoard: board.getBoard
     };
 }
@@ -192,7 +182,7 @@ function gameController(
 function screenController() {
     const game = gameController();
     const playerTurnDiv = document.querySelector('.turn');
-    const messageDiv = document.querySelector('.message');
+    const dialog = document.getElementById('dialog');
     const boardDiv = document.querySelector('.board');
 
     const updateScreen = () => {
@@ -202,7 +192,6 @@ function screenController() {
         const activePlayer = game.getActivePlayer();
 
         playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
-        messageDiv.textContent = game.message;
 
         board.forEach((row, index) => {
             rowIndex = index;
@@ -226,6 +215,22 @@ function screenController() {
         game.playRound(selectedRow, selectedColumn);
         updateScreen();
     }
+
+    window.addEventListener("DOMContentLoaded", () => {
+        const openButton = document.getElementById('change-name');
+        const closeButton = document.querySelector('dialog button');        
+
+        openButton.addEventListener('click', () => {
+            dialog.showModal();
+        });
+        closeButton.addEventListener('click', () => {
+            game.players[0] = document.getElementById('player-one').value;
+            game.players[1] = document.getElementById('player-two').value;
+            dialog.close();
+        });
+    });
+
+
     boardDiv.addEventListener("click", clickHandlerBoard);
 
 

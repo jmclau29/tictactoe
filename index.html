@@ -9,17 +9,22 @@
 </head>
 
 <body>
+    <dialog id="change-name-modal">
+        <form action="|" method="dialog">
+            <label for="player-one">Player One:</label>
+            <input type="text" id="player-one" minlength="1" autofocus/>
+            <label for="player-two">Player Two:</label>
+            <input type="text" id="player-two" minlength="1"/>
+            <label for="order">Who goes first?</label>
+            <select name="order" id="order">
+                <option value="one">Player One</option>
+                <option value="two">Player Two</option>
+            </select>
+            <button type="submit">Close</button>
+        </form>
+    </dialog>
+    <button formmethod="dialog" id="change-name">Start</button>
     <div class="container">
-        <form>
-            <label for="player_one">Player One:</label>
-            <input type="text" id="player_one">
-            <button type="submit">Submit</button>
-        </form>
-        <form>
-            <label for="player_two">Player Two:</label>
-            <input type="text" id="player_two">
-            <button type="submit">Submit</button>
-        </form>
         <h1 class="turn"></h1>
         <h2 class="message"></h2>
         <div class="board"></div>
