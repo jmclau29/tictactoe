@@ -73,6 +73,11 @@ function gameController(
         }
     ];
 
+    const updateName = (player1, player2) => {
+        players[0].name = player1;
+        players[1].name = player2;
+    };
+
     let activePlayer = players[0];
 
     const switchPlayerTurn = () => {
@@ -167,7 +172,7 @@ function gameController(
     return {
         playRound,
         getActivePlayer,
-        //updateName,
+        updateName,
         getBoard: board.getBoard
     };
 }
@@ -182,12 +187,11 @@ function gameController(
 function screenController() {
     const game = gameController();
     const playerTurnDiv = document.querySelector('.turn');
-    const dialog = document.getElementById('dialog');
+    const board = gameBoard();
     const boardDiv = document.querySelector('.board');
 
     const updateScreen = () => {
         boardDiv.textContent = "";
-
         const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
 
@@ -218,17 +222,24 @@ function screenController() {
 
     window.addEventListener("DOMContentLoaded", () => {
         const openButton = document.getElementById('change-name');
-        const closeButton = document.querySelector('dialog button');        
+        const closeButton = document.getElementById('close-modal');
+        const dialog = document.getElementById('change-name-modal');
+        const versus = document.getElementById('versus');
 
         openButton.addEventListener('click', () => {
             dialog.showModal();
         });
         closeButton.addEventListener('click', () => {
-            game.players[0] = document.getElementById('player-one').value;
-            game.players[1] = document.getElementById('player-two').value;
+            player1 = document.getElementById('player-one').value;
+            player2 = document.getElementById('player-two').value;
+            game.updateName(player1, player2);
+            versus.textContent = `${player1} vs. ${player2}`;
+            board.resetBoard();
             dialog.close();
+            updateScreen();
         });
     });
+
 
 
     boardDiv.addEventListener("click", clickHandlerBoard);

@@ -20,12 +20,13 @@
                 <option value="one">Player One</option>
                 <option value="two">Player Two</option>
             </select>
-            <button type="submit">Close</button>
+            <button type="submit" id="close-modal">Close</button>
         </form>
     </dialog>
-    <button formmethod="dialog" id="change-name">Start</button>
+    <button formmethod="dialog" id="change-name">New Game</button>
     <div class="container">
         <h1 class="turn"></h1>
+        <h2 id="versus">Player One vs. Player Two</h2>
         <h2 class="message"></h2>
         <div class="board"></div>
     </div>
