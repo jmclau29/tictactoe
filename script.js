@@ -34,7 +34,6 @@ function gameBoard() {
     }
 
     const resetBoard = () => {
-        console.log('board resetting...');
         board.length = 0;
         makeBoard();
     }
@@ -73,6 +72,7 @@ function gameController(
         }
     ];
 
+    let winner = '';
     const updateName = (player1, player2) => {
         players[0].name = player1;
         players[1].name = player2;
@@ -85,9 +85,13 @@ function gameController(
     };
     const getActivePlayer = () => activePlayer;
 
+    const setActivePlayer = (player) => {
+        activePlayer = player;
+        console.log(`activePlayer is ${activePlayer}`);
+    }
+
     const printNewRound = () => {
         board.printBoard();
-        console.log(`${getActivePlayer().name}'s turn.`);
     };
 
     const winCheck = (arr) => {
@@ -100,6 +104,7 @@ function gameController(
             if (a != '' && a === b && b === c) {
                 console.log(`Congrats! ${getActivePlayer().name} wins!`);
                 board.resetBoard();
+                return winner = `${getActivePlayer.name} wins!`;
             }
         }
         //check columns
@@ -111,6 +116,8 @@ function gameController(
             if (a != '' && a === b && b === c) {
                 console.log(`Congrats! ${getActivePlayer().name} wins!`);
                 board.resetBoard();
+                return winner = `${getActivePlayer.name} wins!`;
+                
             }
         }
 
@@ -122,6 +129,8 @@ function gameController(
         if (a != '' && a === b && b === c) {
             console.log(`Congrats! ${getActivePlayer().name} wins!`);
             board.resetBoard();
+            return winner = `${getActivePlayer.name} wins!`;
+            
         }
 
         //right top -> left bottom diagonal check
@@ -132,6 +141,8 @@ function gameController(
         if (d != '' && d === e && e === f) {
             console.log(`Congrats! ${getActivePlayer().name} wins!`);
             board.resetBoard();
+            return winner = `${getActivePlayer.name} wins!`;
+            
         }
 
         //check for draw
@@ -143,6 +154,7 @@ function gameController(
         }
 
         console.log('draw!');
+        winner = 'draw';
         board.resetBoard();
     }
 
@@ -170,30 +182,31 @@ function gameController(
     printNewRound();
 
     return {
+        winner,
         playRound,
         getActivePlayer,
         updateName,
-        getBoard: board.getBoard
+        setActivePlayer,
+        getBoard: board.getBoard,
+        resetBoard: board.resetBoard
     };
 }
-
-/* To-do:
-    add an object that will manage the display and changing the DOM to reflect the board state. --- OK
-    Add functions that allow the player to interact with the board by clicking on the webpage. --- OK
-    Make it look nice, and allow the players to change their name, restart the game, and results display.
-*/
 
 
 function screenController() {
     const game = gameController();
     const playerTurnDiv = document.querySelector('.turn');
-    const board = gameBoard();
     const boardDiv = document.querySelector('.board');
+    const messageDiv = document.querySelector('.message');
+    
+    
 
     const updateScreen = () => {
         boardDiv.textContent = "";
+        messageDiv.textContent = "";
         const board = game.getBoard();
         const activePlayer = game.getActivePlayer();
+        
 
         playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
 
@@ -208,7 +221,7 @@ function screenController() {
                 boardDiv.appendChild(cellButton);
             })
         })
-    }
+    };
 
     function clickHandlerBoard(e) {
         const selectedColumn = e.target.dataset.column;
@@ -232,9 +245,11 @@ function screenController() {
         closeButton.addEventListener('click', () => {
             player1 = document.getElementById('player-one').value;
             player2 = document.getElementById('player-two').value;
+            activePlayer = document.getElementById('order').value;
             game.updateName(player1, player2);
             versus.textContent = `${player1} vs. ${player2}`;
-            board.resetBoard();
+            game.setActivePlayer(activePlayer);
+            game.resetBoard();
             dialog.close();
             updateScreen();
         });
