@@ -76,6 +76,7 @@ function gameController(
     const updateName = (player1, player2) => {
         players[0].name = player1;
         players[1].name = player2;
+        console.log(players);
     };
 
     let activePlayer = players[0];
@@ -85,9 +86,10 @@ function gameController(
     };
     const getActivePlayer = () => activePlayer;
 
+    const getWinner = () => winner;
+
     const setActivePlayer = (player) => {
-        activePlayer = player;
-        console.log(`activePlayer is ${activePlayer}`);
+        console.log(`activePlayer is ${player}`);
     }
 
     const printNewRound = () => {
@@ -104,7 +106,7 @@ function gameController(
             if (a != '' && a === b && b === c) {
                 console.log(`Congrats! ${getActivePlayer().name} wins!`);
                 board.resetBoard();
-                return winner = `${getActivePlayer.name} wins!`;
+                return winner = `${getActivePlayer().name} wins!`;
             }
         }
         //check columns
@@ -116,8 +118,8 @@ function gameController(
             if (a != '' && a === b && b === c) {
                 console.log(`Congrats! ${getActivePlayer().name} wins!`);
                 board.resetBoard();
-                return winner = `${getActivePlayer.name} wins!`;
-                
+                return winner = `${getActivePlayer().name} wins!`;
+
             }
         }
 
@@ -129,8 +131,8 @@ function gameController(
         if (a != '' && a === b && b === c) {
             console.log(`Congrats! ${getActivePlayer().name} wins!`);
             board.resetBoard();
-            return winner = `${getActivePlayer.name} wins!`;
-            
+            return winner = `${getActivePlayer().name} wins!`;
+
         }
 
         //right top -> left bottom diagonal check
@@ -141,8 +143,8 @@ function gameController(
         if (d != '' && d === e && e === f) {
             console.log(`Congrats! ${getActivePlayer().name} wins!`);
             board.resetBoard();
-            return winner = `${getActivePlayer.name} wins!`;
-            
+            return winner = `${getActivePlayer().name} wins!`;
+
         }
 
         //check for draw
@@ -154,8 +156,8 @@ function gameController(
         }
 
         console.log('draw!');
-        winner = 'draw';
         board.resetBoard();
+        return winner = 'draw';
     }
 
     const playRound = (row, column) => {
@@ -182,7 +184,7 @@ function gameController(
     printNewRound();
 
     return {
-        winner,
+        getWinner,
         playRound,
         getActivePlayer,
         updateName,
@@ -198,17 +200,33 @@ function screenController() {
     const playerTurnDiv = document.querySelector('.turn');
     const boardDiv = document.querySelector('.board');
     const messageDiv = document.querySelector('.message');
-    
-    
+
+
+    const announceWinner = (winner) => {
+        if (!winner) {
+            messageDiv.textContent = '';
+        } else if (winner === 'draw') {
+            messageDiv.textContent = 'the game is a draw!';
+        } else {
+            messageDiv.textContent = winner;
+        }
+    }
+
+    const updatePlayerTurn = () => {
+        activePlayer = game.getActivePlayer().name;
+        console.log(activePlayer);
+        playerTurnDiv.textContent = `${activePlayer}'s turn...`
+    }
 
     const updateScreen = () => {
         boardDiv.textContent = "";
         messageDiv.textContent = "";
         const board = game.getBoard();
-        const activePlayer = game.getActivePlayer();
-        
+        const winner = game.getWinner();
 
-        playerTurnDiv.textContent = `${activePlayer.name}'s turn...`;
+        announceWinner(winner);
+
+        updatePlayerTurn();
 
         board.forEach((row, index) => {
             rowIndex = index;
@@ -254,14 +272,15 @@ function screenController() {
             updateScreen();
         });
     });
-
-
-
     boardDiv.addEventListener("click", clickHandlerBoard);
 
-
     updateScreen();
-
 }
 
 screenController();
+
+/* TO DO
+fix changing the turn message from undefined to the actual player's name. FINISHED
+change the win message from getActivePlayer to the actual player's name. FINISHED
+
+*/
