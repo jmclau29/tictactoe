@@ -38,7 +38,14 @@ function gameBoard() {
         makeBoard();
     }
 
-    return { makeBoard, getBoard, writeToken, printBoard, getBoardWithCellValues, resetBoard };
+    return {
+        makeBoard,
+        getBoard,
+        writeToken,
+        printBoard,
+        getBoardWithCellValues,
+        resetBoard
+    };
 }
 
 function cell() {
@@ -76,7 +83,6 @@ function gameController(
     const updateName = (player1, player2) => {
         players[0].name = player1;
         players[1].name = player2;
-        console.log(players);
     };
 
     let activePlayer = players[0];
@@ -89,7 +95,7 @@ function gameController(
     const getWinner = () => winner;
 
     const setActivePlayer = (player) => {
-        console.log(`activePlayer is ${player}`);
+        activePlayer = players[player];
     }
 
     const printNewRound = () => {
@@ -161,12 +167,11 @@ function gameController(
     }
 
     const playRound = (row, column) => {
-        const boardWithCellValues = board.getBoardWithCellValues();
 
+        const boardWithCellValues = board.getBoardWithCellValues();
         const selectedCell = boardWithCellValues[row][column];
 
         if (selectedCell != '') {
-            console.log('sorry, that spot is taken! Try again!');
             printNewRound();
             return;
         } else {
@@ -174,6 +179,7 @@ function gameController(
             boardWithCellValues[row][column] = getActivePlayer().token;
             winCheck(boardWithCellValues);
         }
+
 
 
         switchPlayerTurn();
@@ -201,7 +207,6 @@ function screenController() {
     const boardDiv = document.querySelector('.board');
     const messageDiv = document.querySelector('.message');
 
-
     const announceWinner = (winner) => {
         if (!winner) {
             messageDiv.textContent = '';
@@ -214,7 +219,6 @@ function screenController() {
 
     const updatePlayerTurn = () => {
         activePlayer = game.getActivePlayer().name;
-        console.log(activePlayer);
         playerTurnDiv.textContent = `${activePlayer}'s turn...`
     }
 
@@ -274,6 +278,7 @@ function screenController() {
     });
     boardDiv.addEventListener("click", clickHandlerBoard);
 
+    //game.stopRepeatedClicks();
     updateScreen();
 }
 
