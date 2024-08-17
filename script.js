@@ -249,6 +249,10 @@ function screenController() {
         const selectedColumn = e.target.dataset.column;
         const selectedRow = e.target.dataset.row;
 
+        if (e.target.textContent != '') {
+            messageDiv.textContent = 'sorry, that spot is taken. Please try again!';
+            return;
+        }
         if (!selectedColumn || !selectedRow) return;
 
         game.playRound(selectedRow, selectedColumn);
@@ -287,5 +291,6 @@ screenController();
 /* TO DO
 fix changing the turn message from undefined to the actual player's name. FINISHED
 change the win message from getActivePlayer to the actual player's name. FINISHED
-
+implement a message in the DOM when the clicked space is already filled. FINISHED
+make it pretty.
 */
