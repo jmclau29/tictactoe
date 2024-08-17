@@ -300,3 +300,9 @@ fix changing the turn message from undefined to the actual player's name. FINISH
 change the win message from getActivePlayer to the actual player's name. FINISHED
 implement a message in the DOM when the clicked space is already filled. FINISHED
 */
+
+/* 
+CREDIT: Most of the code in the gameBoard(), cell(), gameController(), and screenController() is drawn from the
+excellent post "Building a house from the inside out" by Alex Younger. It can be found at:
+https://www.ayweb.dev/blog/building-a-house-from-the-inside-out
+*/
