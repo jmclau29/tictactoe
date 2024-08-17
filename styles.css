@@ -16,3 +16,18 @@
     align-items: center;
     text-align: center;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+button#change-name {
+    margin-top: 2rem;
+}
+
+button#restart-game {
+    margin-top: 2rem;
+}
