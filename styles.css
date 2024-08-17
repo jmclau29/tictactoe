@@ -31,3 +31,7 @@ button#change-name {
 button#restart-game {
     margin-top: 2rem;
 }
+
+button.cell {
+    font-size: 3rem;
+}
